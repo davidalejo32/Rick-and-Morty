@@ -1,59 +1,69 @@
 class myCard extends HTMLElement {
-   constructor () {
-      super();
+  constructor() {
+    super();
 
-      this.attachShadow( { mode: 'open' } )
+    this.attachShadow({ mode: "open" });
+  }
 
-   }
+  static get observedAttributes() {
+    return [
+      "img",
+      "alt",
+      "name-per",
+      "status",
+      "species",
+      "last-location",
+      "first-location",
+      "color",
+    ];
+  }
 
-   static get observedAttributes () {
-      return ['img', "alt", 'name-per', 'status', 'species', 'last-location', 'first-location', 'color'];
-   }
+  attributeChangedCallback(attr, olvVal, newVal) {
+    if (attr === "img" && newVal !== olvVal) {
+      this.img = newVal;
+    }
 
-   attributeChangedCallback (attr, olvVal, newVal) {
-      if( attr === 'img' && newVal !== olvVal) {
-         this.img = newVal;
-      }
+    if (attr === "alt" && newVal !== olvVal) {
+      this.alt = newVal;
+    }
 
-      if( attr === 'alt' && newVal !== olvVal) {
-         this.alt = newVal;
-      }
+    if (attr === "name-per" && newVal !== olvVal) {
+      this.namePer = newVal;
+    }
 
-      if( attr === 'name-per' && newVal !== olvVal) {
-         this.namePer = newVal;
-      }
+    if (attr === "status" && newVal !== olvVal) {
+      this.status = newVal;
+    }
 
-      if( attr === 'status' && newVal !== olvVal) {
-         this.status = newVal;
-      }
+    if (attr === "species" && newVal !== olvVal) {
+      this.species = newVal;
+    }
 
-      if( attr === 'species' && newVal !== olvVal) {
-         this.species = newVal;
-      }
+    if (attr === "last-location" && newVal !== olvVal) {
+      this.last = newVal;
+    }
 
-      if( attr === 'last-location' && newVal !== olvVal) {
-         this.last = newVal;
-      }
+    if (attr === "first-location" && newVal !== olvVal) {
+      this.first = newVal;
+    }
 
-      if( attr === 'first-location' && newVal !== olvVal) {
-         this.first = newVal;
-      }
+    if (attr === "color" && newVal !== olvVal) {
+      this.color = newVal;
+    }
+  }
 
-      if( attr === 'color' && newVal !== olvVal) {
-         this.color = newVal;
-      }
-   }
-
-   getTemplate () {
-      const template = document.createElement("template");
-      template.innerHTML = `
+  getTemplate() {
+    const template = document.createElement("template");
+    template.innerHTML = `
          <article class="card">
             
             <div class="card__container">
 
                <figure class="card__img-container">
                   <img class="card__img" src="${this.img}" alt="${this.alt}">
-                  <figcaption class="card__name">${this.namePer}</slot></figcaption>
+                  <figcaption class="card__name">${
+                    this.namePer
+                  }</slot></figcaption>
                </figure>
    
                <div class="card__info">
@@ -61,7 +71,9 @@ class myCard extends HTMLElement {
                      <p class="card__info-name">${this.namePer}</p>
                      <div class="card__status">
                         <span class="card__status-color"></span>
-                        <span class="card__status-per"> ${this.status} <span> - ${this.species} </span> </span>
+                        <span class="card__status-per"> ${
+                          this.status
+                        } <span> - ${this.species} </span> </span>
                      </div>
                   </div>
    
@@ -79,11 +91,11 @@ class myCard extends HTMLElement {
          </article>
          ${this.getStyle()}
       `;
-      return template;
-   }
+    return template;
+  }
 
-   getStyle () {
-      return `
+  getStyle() {
+    return `
          <style>
 
             :host {
@@ -216,7 +228,7 @@ class myCard extends HTMLElement {
 
             .card__status {
                display: flex;
-               flex-wrap: wrap;
+ 
                align-items: center;
                justify-content: center;
                /* margin-left: 35px; */
@@ -260,24 +272,21 @@ class myCard extends HTMLElement {
 
          </style>
       `;
-   }
+  }
 
-   render () {
+  render() {
+    this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
 
-      this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
-      
-      this.cardContainer = this.shadowRoot.querySelector('.card__container');
+    this.cardContainer = this.shadowRoot.querySelector(".card__container");
 
-      this.cardContainer.addEventListener("click", () => {
-         this.cardContainer.classList.toggle("card__container--rotate")
-      })
-   }
+    this.cardContainer.addEventListener("click", () => {
+      this.cardContainer.classList.toggle("card__container--rotate");
+    });
+  }
 
-
-
-   connectedCallback () {    
-      this.render();
-   }
+  connectedCallback() {
+    this.render();
+  }
 }
 
 customElements.define("my-card", myCard);
