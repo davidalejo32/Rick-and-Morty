@@ -26,35 +26,39 @@ const $card = document.querySelector(".cards");
 
 // funcion que carga las cards
 async function loadCards(getHash) {
-  $card.innerHTML = "";
-  const data = await getData(`${baseUrl}character/?page=${getHash}`);
+  try {
+    $card.innerHTML = "";
+    const data = await getData(`${baseUrl}character/?page=${getHash}`);
 
-  // cards
-  data.results.map(async (element) => {
-    const myCard = document.createElement("my-card");
-    myCard.img = `${element.image}`;
-    myCard.alt = `${element.name}`;
-    myCard.status = `${element.status}`;
-    myCard.setAttribute("name-per", `${element.name}`);
-    myCard.species = `${element.species}`;
-    myCard.setAttribute("last-location", `${element.location.name}`);
+    // cards
+    data.results.map(async (element) => {
+      const myCard = document.createElement("my-card");
+      myCard.img = `${element.image}`;
+      myCard.alt = `${element.name}`;
+      myCard.status = `${element.status}`;
+      myCard.setAttribute("name-per", `${element.name}`);
+      myCard.species = `${element.species}`;
+      myCard.setAttribute("last-location", `${element.location.name}`);
 
-    if (element.status === "Alive") {
-      myCard.color = "#27AE60";
-    } else if (element.status === "Dead") {
-      myCard.color = "#C0392B";
-    } else {
-      myCard.color = "#D5DBDB";
-    }
+      if (element.status === "Alive") {
+        myCard.color = "#27AE60";
+      } else if (element.status === "Dead") {
+        myCard.color = "#C0392B";
+      } else {
+        myCard.color = "#D5DBDB";
+      }
 
-    const lastEpisode = await getData(
-      element.episode[element.episode.length - 1]
-    );
+      const lastEpisode = await getData(
+        element.episode[element.episode.length - 1]
+      );
 
-    myCard.setAttribute("first-location", `${lastEpisode.name}`);
+      myCard.setAttribute("first-location", `${lastEpisode.name}`);
 
-    $card.appendChild(myCard);
-  });
+      $card.appendChild(myCard);
+    });
+  } catch (error) {
+    console.error(`Error: ${error}`);
+  }
 }
 
 loadCards(location.hash);
