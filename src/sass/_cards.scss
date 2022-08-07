@@ -1,0 +1,18 @@
+.cards{
+   width: 93%;
+   margin: 50px auto;
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+   justify-items: center;
+   grid-auto-flow: row;
+   gap: 40px;
+}
+
+.pages {
+   width: 100px;
+}
+
+.page-nums {
+   display: flex;
+   flex-direction: row-reverse;
+}

@@ -1,0 +1,49 @@
+.header{
+   width: 100%;
+   height: 45rem;
+   
+   
+   position: relative;
+   
+
+   &__img {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background-image: url("https://wallpaper.dog/large/17058436.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      background-attachment: fixed;
+   }
+
+   &__title {
+      width: 80%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ffffff;
+      text-align: center;
+      font-size: 8rem;
+      position: absolute;
+      bottom: 8rem;
+   }
+
+   &__img::after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      position: absolute;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+      
+   }
+   
+}
+
+@media screen and (max-width: 425px) {
+   .header__title{
+      font-size: 6.5rem;
+   }
+}
